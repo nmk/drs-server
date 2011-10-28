@@ -1,0 +1,133 @@
+/* DRS grammar */
+drs =
+  space?
+  lambda_parameters:lambda_parameter*
+  presuppositions:presuppositions?
+  space?
+  store:store?
+  space?
+  '[' space? universe:universe? space? '|' conditions:condition* space? ']'
+  '>'? '>'?
+  space? {
+    result = {
+      _type: 'DRS::DRS'
+    };
+
+    if(universe && universe.length != 0)
+      result.universe = universe
+
+    if(conditions && conditions.length != 0)
+      result.conditions = conditions
+
+    if(lambda_parameters && lambda_parameters.length != 0)
+      result.lambda_parameters = lambda_parameters;
+
+    if(store && store.length != 0)
+      result.store_variables = store;
+
+    return result;
+  }
+
+lambda_parameter
+  = '^' var_name:name '.' {
+    return {
+      _type: 'DRS::LambdaParameter',
+      name : var_name }
+  }
+
+store
+  = '<' fst:name ',' rest:(space? name ',')* {
+    result = [{
+      _type: 'DRS::StoreVariable',
+      name : fst }
+    ]
+
+    for(var i = 0; i < rest.length; i++){
+      result.push({
+        _type: 'DRS::StoreVariable',
+        name : rest[i][1]
+      });
+    }
+    return result;
+  }
+
+
+presuppositions
+  = '<'? '{' fst:drs rest:(space? drs)* '}' {
+    result = [fst];
+    for(var i = 0; i < rest.length; i++)
+      result.push(rest[i][1]);
+
+    return result;
+  }
+
+
+universe
+  = fst:discourse_referent rest:(space+ discourse_referent)* {
+    result = [fst];
+    for(var i = 0; i < rest.length; i++){
+      result.push(rest[i][1]);
+    }
+    return result;
+  }
+
+discourse_referent
+  = name:name {
+    return {
+      '_type': 'DRS::DiscourseReferent',
+      'name' : name }
+  }
+
+/*
+conditions
+  = condition:condition rest:(space? condition)* {
+    result = [condition];
+    for(var i = 0; i < rest.length; i++){
+      result.push(rest[i][1]);
+    }
+    return result;
+  }
+*/
+
+condition
+  = prefix_relation
+
+prefix_relation
+  = space? relation_name:name '(' relation_arguments:relation_arguments* ')' space? {
+    var result = {
+      _type: 'DRS::Relation',
+      name:   relation_name
+    };
+
+    if(relation_arguments && relation_arguments.length != 0)
+      result.arguments = relation_arguments[0];
+    else
+      result.arguments = [];
+
+    return result;
+  }
+
+relation_arguments
+  = fst:relation_argument space? rest:(',' space? relation_argument)* {
+    result = [fst];
+    for(var i = 0; i < rest.length; i++){
+      result.push(rest[i][2]);
+    }
+    return result;
+  }
+
+relation_argument
+  = prefix_relation / variable
+
+variable
+  = name:name {
+   return {
+     _type: 'DRS::Variable',
+     name:  name
+   };
+ }
+
+name
+  = chars:[$^{}\\\\'"A-Za-z0-9_-]+ { return chars.join(''); }
+
+space = [ \t\r\n]+

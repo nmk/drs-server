@@ -1,0 +1,26 @@
+!!! 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/vendor/jquery-min.js')
+    script(src='/javascripts/vendor/raphael-min.js')
+    script(src='/javascripts/vendor/underscore-min.js')
+    script(src='/javascripts/parsers/tree-parser.js')
+    script(src='/javascripts/tree.js')
+  body
+    div(id='container')
+      div(id='canvas')
+      div#message.error
+      textarea(id='user-input', rows='10')
+        [VoiceP der Hund dem Hasen nach⊕lauf [DP der Hund]
+                                             [Voice' [wP [DP_dat dem Hasen]
+                                                         [w' [vp [v lauf]]
+                                                             [w nach]
+                                                         ]
+                                                     ]
+                                                     [Voice]
+                                             ]
+        ]
+      br
+      button(id='parse') Parse

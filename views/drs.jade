@@ -1,0 +1,19 @@
+!!! 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/vendor/jquery-min.js')
+    script(src='/javascripts/vendor/raphael-min.js')
+    script(src='/javascripts/vendor/underscore-min.js')
+    script(src='/javascripts/parsers/drs-parser.js')
+    script(src='/javascripts/drs.js')
+  body
+    div(id='container')
+      div(id='json-output')
+      div#message.error
+      textarea(id='user-input', rows='10')
+        ^e.^x.[|agent(e, x)]
+      br
+      button(id='parse') Parse
+      button(id='visualize') Visualize

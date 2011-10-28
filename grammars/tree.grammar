@@ -1,0 +1,20 @@
+node
+  = space? '[' name:name space? part:part? space? child_nodes:node* space? ']' space? {
+    result = { label: name }
+
+    if(part)
+      result.part = part
+
+    if(child_nodes && child_nodes.length != 0)
+      result.child_nodes = child_nodes
+
+    return result;
+  }
+
+part
+  = chars:[^\[\]]+ { return chars.join('').replace(/ +$/, '') }
+
+name
+  = chars:[$^{}\\\\'"A-Za-z0-9_-]+ { return chars.join(''); }
+
+space = [ \t\r\n]+
