@@ -15,6 +15,6 @@ part
   = chars:[^\[\]]+ { return chars.join('').replace(/ +$/, '') }
 
 name
-  = chars:[\u221A$^{}\\\\'"A-Za-z0-9_-]+ { return chars.join(''); }
+  = chars:[^ \t\r\n\[\]]+ { return chars.join(''); }
 
 space = [ \t\r\n]+
