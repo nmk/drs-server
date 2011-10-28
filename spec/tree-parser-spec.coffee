@@ -13,6 +13,11 @@ describe 'a node', ->
       label: 'VoiceP'
     })
 
+  it 'should parse with a root in the name', ->
+    expect(p('[\u221Anach]', 'node')).toEqual({
+      label: '\u221Anach'
+    })
+
   it 'should parse with no children and a single token part', ->
     expect(p('[VoiceP Hund]', 'node')).toEqual({
       label: 'VoiceP',

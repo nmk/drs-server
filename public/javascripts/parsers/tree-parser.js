@@ -277,26 +277,26 @@ treeParser = (function(){
         
         
         var savedPos0 = pos;
-        if (input.substr(pos).match(/^[$^{}\\\\'"A-Za-z0-9_\-]/) !== null) {
+        if (input.substr(pos).match(/^[\u221A$^{}\\\\'"A-Za-z0-9_\-]/) !== null) {
           var result3 = input.charAt(pos);
           pos++;
         } else {
           var result3 = null;
           if (reportMatchFailures) {
-            matchFailed("[$^{}\\\\\\\\'\"A-Za-z0-9_\\-]");
+            matchFailed("[\\u221A$^{}\\\\\\\\'\"A-Za-z0-9_\\-]");
           }
         }
         if (result3 !== null) {
           var result1 = [];
           while (result3 !== null) {
             result1.push(result3);
-            if (input.substr(pos).match(/^[$^{}\\\\'"A-Za-z0-9_\-]/) !== null) {
+            if (input.substr(pos).match(/^[\u221A$^{}\\\\'"A-Za-z0-9_\-]/) !== null) {
               var result3 = input.charAt(pos);
               pos++;
             } else {
               var result3 = null;
               if (reportMatchFailures) {
-                matchFailed("[$^{}\\\\\\\\'\"A-Za-z0-9_\\-]");
+                matchFailed("[\\u221A$^{}\\\\\\\\'\"A-Za-z0-9_\\-]");
               }
             }
           }
