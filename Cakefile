@@ -3,7 +3,7 @@ fs      = require 'fs'
 {spawn} = require 'child_process'
 
 build = (watch=false) ->
-  options = ['-c', 'lib', 'public/javascripts']
+  options = ['-c', 'lib', 'spec', 'public/javascripts']
   options.unshift '-w' if watch
 
   coffee = spawn 'coffee', options
