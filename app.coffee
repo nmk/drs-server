@@ -1,5 +1,7 @@
 express   = require 'express'
 drsParser = require('./lib/drs-parser').drsParser
+pegjs     = require 'pegjs'
+Path      = require 'path'
 
 app = module.exports = express.createServer()
 
@@ -27,6 +29,21 @@ app.get '/tree', (req, res) ->
 app.post '/drs/visualize', (req, res) ->
   result = drsParser.parse req.body.data, 'drs'
   res.end JSON.stringify(result, null, '  ')
+
+# parsers
+app.get '/javascripts/parsers/:parser-parser.js', (req, res) ->
+
+  parserName = req.params.parser
+
+  Path.exists "./lib/#{parserName}-parser.coffee", (exists) ->
+    unless exists
+      res.send "No such parser."
+             , 'Content-Type': 'text/plain'
+             ,  404
+    else
+      parser = require("./lib/#{parserName}-parser")["#{parserName}Parser"]
+      res.send "#{parserName}Parser = #{parser.toSource()}"
+             , 'Content-Type': 'application/javascript'
 
 app.listen 3000
 console.log("Express server listening on port %d in %s mode",
