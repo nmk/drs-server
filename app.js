@@ -30,7 +30,7 @@ app.get('/tree', function(req, res){
 });
 
 app.post('/drs/visualize', function(req, res){
-  result = parser.parse(req.body.data, 'drs')
+  result = drsParser.parse(req.body.data, 'drs')
   console.log(JSON.stringify(result, null, '  '));
 });
 
