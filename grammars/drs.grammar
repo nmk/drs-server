@@ -90,7 +90,10 @@ conditions
 */
 
 condition
-  = prefix_relation
+  = relation / name
+
+relation
+  = infix_relation / prefix_relation
 
 prefix_relation
   = space? relation_name:name '(' relation_arguments:relation_arguments* ')' space? {
@@ -105,6 +108,16 @@ prefix_relation
       result.arguments = [];
 
     return result;
+  }
+
+infix_relation
+  = fst:relation_argument ' ' relation_name:name ' ' snd:relation_argument {
+    return {
+      _type     : 'DRS::Relation'
+    , infix     : true
+    , name      : relation_name
+    , arguments : [fst, snd]
+    };
   }
 
 relation_arguments
