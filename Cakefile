@@ -1,8 +1,14 @@
 {print} = require 'sys'
 {spawn} = require 'child_process'
 
-task 'spec', 'Run all specs', ->
-  spec = spawn 'jasmine-node', ['--coffee', 'spec']
+option '-v', '--verbose', 'use verbose reporting'
+
+task 'spec', 'Run all specs', (options) ->
+
+  defaultOptions = ['--coffee', 'spec']
+  defaultOptions.push '--verbose' if options.verbose
+
+  spec = spawn 'jasmine-node', defaultOptions
   spec.stdout.on 'data', (data) -> print data.toString()
   spec.stderr.on 'data', (data) -> print data.toString()
 
