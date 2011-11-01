@@ -5,7 +5,5 @@ p = (data, root='description') ->
 
 describe 'description', ->
 
-  describe 'should parse correctly', ->
-
-    xit 'with a relation description', ->
-      result = p 's:HAVE(x)'
+  xit 'with a relation description', ->
+    result = p 's:HAVE(x)'

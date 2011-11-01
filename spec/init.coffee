@@ -16,3 +16,4 @@ beforeEach ->
 
 global.drsParser  = require(Path.join __dirname, '..', 'lib', 'drs-parser').drsParser
 global.treeParser = require(Path.join __dirname, '..', 'lib', 'tree-parser').treeParser
+global.ls         = require(Path.join __dirname, '..', 'lib', 'latex-serializer').LaTeXSerializer

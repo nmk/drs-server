@@ -1,12 +1,9 @@
-Path    = require 'path'
-
-jasmine     = require 'jasmine-node'
-treeParser  = require(Path.join __dirname, '..', 'lib', 'tree-parser').treeParser
+require './init'
 
 p = (data, root='node') ->
   treeParser.parse(data, root)
 
-describe 'a node', ->
+describe 'syntax tree node', ->
 
   it 'should parse with no children and no part', ->
     expect(p('[VoiceP]', 'node')).toEqual({
