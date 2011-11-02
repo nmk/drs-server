@@ -9,7 +9,7 @@ l = (data, root='drs') ->
 describe 'LaTeX serializer', ->
 
   it 'should serialize a variable if it is an ascii token', ->
-    expect(l('w', 'variable')).toEqual '{w}'
+    expect(l('w', 'variable')).toEqual 'w'
 
   it 'should serialize a prefix relation', ->
-    expect(l('agent(e,x)', 'prefix_relation')).toEqual 'agent({e}, {x})'
+    expect(l('agent(e,x)', 'prefix_relation')).toEqual 'agent(e, x)'

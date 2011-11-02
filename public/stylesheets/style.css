@@ -17,10 +17,14 @@ div#json-output{
   height: 500px;
   border: 1px solid #CCC;
   margin-bottom: 1em;
+  overflow: scroll;
+  padding: 2px;
 }
 
 div#json-output pre{
   font: 10px Monaco, monospace;
+  padding: 0;
+  margin: 0;
 }
 
 div#message{

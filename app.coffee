@@ -1,5 +1,6 @@
 express   = require 'express'
 drsParser = require('./lib/drs-parser').drsParser
+latexSerializer = require('./lib/latex-serializer').LaTeXSerializer
 pegjs     = require 'pegjs'
 Path      = require 'path'
 
@@ -28,7 +29,10 @@ app.get '/tree', (req, res) ->
 
 app.post '/drs/visualize', (req, res) ->
   result = drsParser.parse req.body.data, 'drs'
-  res.end JSON.stringify(result, null, '  ')
+  res.send JSON.stringify({
+    json:  JSON.stringify(result, null, '  ')
+    latex: latexSerializer.toLaTeX(result)
+  }, null, '  '), 'Content-Type': 'application/json'
 
 # parsers
 app.get '/javascripts/parsers/:parser-parser.js', (req, res) ->

@@ -25,6 +25,9 @@ drs =
     if(store && store.length != 0)
       result.store_variables = store;
 
+    if(presuppositions && presuppositions.length !== 0)
+      result.presuppositions = presuppositions
+
     return result;
   }
 
@@ -78,19 +81,8 @@ discourse_referent
       'name' : name }
   }
 
-/*
-conditions
-  = condition:condition rest:(space? condition)* {
-    result = [condition];
-    for(var i = 0; i < rest.length; i++){
-      result.push(rest[i][1]);
-    }
-    return result;
-  }
-*/
-
 condition
-  = relation / name
+  = description / relation
 
 relation
   = infix_relation / prefix_relation
@@ -131,6 +123,21 @@ relation_arguments
 
 relation_argument
   = prefix_relation / variable
+
+description
+  = described:variable ':' description:(drs/relation) {
+    var resultDescription = description;
+
+    if(description._type === 'DRS::Relation')
+      resultDescription = { _type: 'DRS::DRS', conditions : [description] }
+
+    var result = {
+      _type       : 'DRS::Description'
+    , described   : described
+    , description : resultDescription
+    };
+    return result;
+  }
 
 variable
   = name:name {
